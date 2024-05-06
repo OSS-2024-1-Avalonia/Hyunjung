@@ -2,8 +2,36 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:ToDoListApp"
+        x:DataType="vm:MainViewModel"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="ToDoListApp.MainWindow"
-        Title="ToDoListApp">
-    Welcome to Avalonia!
+        Title="ToDo List App" Width="600" Height="600">
+    <StackPanel Margin="10">
+        <!-- 입력 필드 및 추가 버튼 -->
+        <StackPanel Orientation="Horizontal">
+            <TextBox Width="200" Watermark="Task Description" Name="TaskDescription"/>
+            <ComboBox Width="100" Name="TaskCategory">
+                <ComboBoxItem Content="Work"/>
+                <ComboBoxItem Content="Home"/>
+                <ComboBoxItem Content="Other"/>
+            </ComboBox>
+            <!-- NumericUpDown 또는 대체 컨트롤 사용 -->
+            <TextBox Width="50" Name="TaskPriority"/>
+            <Button Content="Add" Click="OnAddTaskClicked"/>
+        </StackPanel>
+        <!-- 할 일 목록을 표시할 ListBox -->
+        <ListBox ItemsSource="{Binding Items}">
+            <ListBox.ItemTemplate>
+                <DataTemplate x:DataType="vm:ToDoItem">
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox IsChecked="{Binding IsCompleted}" Margin="5"/>
+                        <TextBlock Text="{Binding Task}" Margin="5"/>
+                        <TextBlock Text="{Binding Category}" Margin="5"/>
+                        <TextBlock Text="{Binding Priority}" Margin="5"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </StackPanel>
 </Window>
